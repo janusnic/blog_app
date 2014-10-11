@@ -1,7 +1,12 @@
 BlogApp::Application.routes.draw do
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
   
   root  'static_pages#home'
   match '/about',  to: 'static_pages#about',            via: 'get'
@@ -11,7 +16,7 @@ BlogApp::Application.routes.draw do
   match '/signout', to: 'sessions#destroy',     via: 'delete'
 
 
-  resources :posts
+  #resources :posts
   
 
   # The priority is based upon order of creation: first created -> highest priority.
